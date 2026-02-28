@@ -1,5 +1,6 @@
 ```
-cd outputs/
+mkdir realmdreamer
+cd realmdreamer
 gdown --fuzzy https://drive.google.com/file/d/1eHo9ZxOgUdVqwSUe0vZR8byE7jSNYEhF/view?usp=sharing
 unzip realmdreamer_outputs.zip
 cd ..
