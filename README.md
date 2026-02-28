@@ -1,6 +1,11 @@
-'''
-ss
-'''
+```
+cd outputs/
+gdown --fuzzy https://drive.google.com/file/d/1eHo9ZxOgUdVqwSUe0vZR8byE7jSNYEhF/view?usp=sharing
+unzip realmdreamer_outputs.zip
+cd ..
+
+git clone https://github.com/KovenYu/WonderJourney.git
+```
 
 <h2> 
 <a href="https://vistadream-project-page.github.io/" target="_blank">VistaDream: Sampling multiview consistent images for single-view scene reconstruction</a>
