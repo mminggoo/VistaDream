@@ -32,12 +32,9 @@ from scipy.stats import pearsonr
 import torchvision.transforms as T
 from torchvision.models import inception_v3, Inception_V3_Weights
 
-# ── VistaDream 내부 모듈 (import 시 내부 argparse 충돌 방지) ─────────────────
-_argv_backup = sys.argv
-sys.argv = [sys.argv[0]]          # import 중에는 스크립트 이름만 노출
+# ── VistaDream 내부 모듈 ─────────────────────────────────────────────────────
 from pipe.cfgs import load_cfg
 from pipe.c2f_recons import Pipeline
-sys.argv = _argv_backup           # 원래 인자 복원
 
 # ═══════════════════════════════════════════════════════════════════════════════
 #  유틸리티
@@ -452,7 +449,9 @@ def main():
                         help='평가에 사용할 최대 프레임 수')
     parser.add_argument('--skip_generation', action='store_true',
                         help='이미 생성된 결과가 있으면 재생성 건너뛰기')
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
+    if unknown:
+        print(f'[WARN] 무시된 인자: {unknown}')
 
     # ── 데이터셋 수집 ────────────────────────────────────────────────────────
     entries = collect_dataset_entries(args.dataset)
