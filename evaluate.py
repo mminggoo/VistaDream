@@ -342,12 +342,17 @@ def run_vistadream(cfg, input_rgb_path: str, output_dir: str):
     cfg = deepcopy(cfg)
     cfg.scene.input.rgb = dst_rgb
 
+    # OneFormer/Detectron2 가 sys.argv 를 파싱하므로 임시로 비워줌
+    orig_argv = sys.argv
+    sys.argv = [sys.argv[0]]
+
     pipeline = Pipeline(cfg)
 
     start_time = time.time()
     pipeline()
     elapsed = time.time() - start_time
 
+    sys.argv = orig_argv
     return output_dir, elapsed
 
 
@@ -449,9 +454,7 @@ def main():
                         help='평가에 사용할 최대 프레임 수')
     parser.add_argument('--skip_generation', action='store_true',
                         help='이미 생성된 결과가 있으면 재생성 건너뛰기')
-    args, unknown = parser.parse_known_args()
-    if unknown:
-        print(f'[WARN] 무시된 인자: {unknown}')
+    args = parser.parse_args()
 
     # ── 데이터셋 수집 ────────────────────────────────────────────────────────
     entries = collect_dataset_entries(args.dataset)
