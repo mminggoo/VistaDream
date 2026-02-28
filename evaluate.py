@@ -32,9 +32,12 @@ from scipy.stats import pearsonr
 import torchvision.transforms as T
 from torchvision.models import inception_v3, Inception_V3_Weights
 
-# ── VistaDream 내부 모듈 ─────────────────────────────────────────────────────
+# ── VistaDream 내부 모듈 (import 시 내부 argparse 충돌 방지) ─────────────────
+_argv_backup = sys.argv
+sys.argv = [sys.argv[0]]          # import 중에는 스크립트 이름만 노출
 from pipe.cfgs import load_cfg
 from pipe.c2f_recons import Pipeline
+sys.argv = _argv_backup           # 원래 인자 복원
 
 # ═══════════════════════════════════════════════════════════════════════════════
 #  유틸리티
@@ -546,3 +549,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# python evaluate_vistadream.py \
+#     --cfg pipe/cfgs/basic.yaml \
+#     --dataset dataset \
+#     --output eval_output \
+#     --result_json eval_results.json
